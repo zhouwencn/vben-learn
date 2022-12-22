@@ -20,12 +20,15 @@ const __APP_INFO__ = {
 };
 
 export default ({ command, mode }: ConfigEnv): UserConfig => {
-  const root = process.cwd();
-
+  // 获取当前项目所在服务器的位置路径 例如/Users/zhouwen/code/javascript/vben-learn
+  const root = process.cwd(); 
+  // 获取root目录下的.env文件的变量， 默认情况下只有前缀为 VITE_ 会被加载，除非更改了 prefixes 配置。
+  // 默认情况下，运行在 development 模式， 所以可以把.env看作是公共部分，.env.development看作是开发模式所需要的变量
+  // .env.development里面的变量有更高的优先级
   const env = loadEnv(mode, root);
   // The boolean type read by loadEnv is a string. This function can be converted to boolean type
+  // 把"false" "true"转为 false true 的布尔类型， "123"转为 123的number类型
   const viteEnv = wrapperEnv(env);
-  console.log(viteEnv);
 
   const { VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv;
 

@@ -20,13 +20,12 @@ export function generateAntColors(color: string, theme: GenerateTheme = 'default
     theme,
   });
 }
-
+// 获取一些样式的值，格式都是16进制的， '#010913'
 export function getThemeColors(color?: string) {
   const tc = color || primaryColor;
   const lightColors = generateAntColors(tc);
   const primary = lightColors[5];
   const modeColors = generateAntColors(primary, 'dark');
-
   return [...lightColors, ...modeColors];
 }
 
@@ -40,7 +39,6 @@ export function generateColors({
   const lightens = arr.map((_t, i) => {
     return mixLighten(color, i / 5);
   });
-
   const darkens = arr.map((_t, i) => {
     return mixDarken(color, i / 5);
   });

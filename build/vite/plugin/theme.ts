@@ -15,13 +15,16 @@ import { getThemeColors, generateColors } from '../../config/themeConfig';
 import { generateModifyVars } from '../../generate/generateModifyVars';
 
 export function configThemePlugin(isBuild: boolean): PluginOption[] {
+  // generateColors生成一些样式的值，有rgba的，有的16进制的
   const colors = generateColors({
     mixDarken,
     mixLighten,
     tinycolor,
   });
   const plugin = [
+    // 用于动态更改界面主题色的 vite 插件。
     viteThemePlugin({
+      // 自定义选择器转换，比如将.a 转换为.b，为了修改主题样式，比如暗黑模式之间的切换
       resolveSelector: (s) => {
         s = s.trim();
         switch (s) {
@@ -43,12 +46,16 @@ export function configThemePlugin(isBuild: boolean): PluginOption[] {
         }
         return s.startsWith('[data-theme') ? s : `[data-theme] ${s}`;
       },
+      // 样式的值替换，用于修改整个组件的样式，比如把color：red改成color：blue
       colorVariables: [...getThemeColors(), ...colors],
     }),
+    // 使用ant的暗黑模式的样式，并引入一些自己定义的样式和样式变量
     antdDarkThemePlugin({
       preloadFiles: [
         path.resolve(process.cwd(), 'node_modules/ant-design-vue/dist/antd.less'),
         //path.resolve(process.cwd(), 'node_modules/ant-design-vue/dist/antd.dark.less'),
+
+        // 导入自己定义的一些样式和变量
         path.resolve(process.cwd(), 'src/design/index.less'),
       ],
       filter: (id) => (isBuild ? !id.endsWith('antd.less') : true),
