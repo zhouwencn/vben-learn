@@ -24,7 +24,9 @@
       const appStore = useAppStore();
 
       // Monitor screen breakpoint information changes
+      // 检测屏幕的大小变化，同时挂载好window.resize事件
       createBreakpointListen(({ screenMap, sizeEnum, width }) => {
+        // document.body.clientWidth小于LG 992就判断为手机
         const lgWidth = screenMap.get(sizeEnum.LG);
         if (lgWidth) {
           isMobile.value = width.value - 1 < lgWidth;
@@ -41,6 +43,8 @@
        * Used to maintain the state before the window changes
        */
       function handleRestoreState() {
+        // 是手机
+        //
         if (unref(isMobile)) {
           if (!unref(isSetState)) {
             isSetState.value = true;
@@ -62,6 +66,7 @@
             appStore.setBeforeMiniInfo({ menuMode, menuCollapsed, menuType, menuSplit });
           }
         } else {
+          // 不是手机
           if (unref(isSetState)) {
             isSetState.value = false;
             const { menuMode, menuCollapsed, menuType, menuSplit } = appStore.getBeforeMiniInfo;
@@ -76,6 +81,7 @@
           }
         }
       }
+      // 暴露一个默认的slot插槽，类似返回一个render函数
       return () => slots.default?.();
     },
   });
