@@ -40,6 +40,7 @@ export const useLocaleStore = defineStore({
     /**
      * Initialize multilingual information and load the existing configuration from the local cache
      */
+    // 初始化localstorage和app-locale的localInfo数据
     initLocale() {
       this.setLocaleInfo({
         ...localeSetting,

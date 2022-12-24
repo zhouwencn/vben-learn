@@ -96,6 +96,7 @@ export class Persistent {
   }
 }
 
+// 浏览器刷新或者关闭出发，所以清楚localstorage和sessionstorage之后，刷新之后数据又有了
 window.addEventListener('beforeunload', function () {
   // TOKEN_KEY 在登录或注销时已经写入到storage了，此处为了解决同时打开多个窗口时token不同步的问题
   // LOCK_INFO_KEY 在锁屏和解锁时写入，此处也不应修改

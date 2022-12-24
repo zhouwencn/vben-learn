@@ -46,7 +46,7 @@ export function configThemePlugin(isBuild: boolean): PluginOption[] {
         }
         return s.startsWith('[data-theme') ? s : `[data-theme] ${s}`;
       },
-      // 样式的值替换，用于修改整个组件的样式，比如把color：red改成color：blue
+      // 样式的值替换，配合changeTheme（可全局搜索一下）用于修改整个组件的样式，比如把color：red改成color：blue
       colorVariables: [...getThemeColors(), ...colors],
     }),
     // 使用ant的暗黑模式的样式，并引入一些自己定义的样式和样式变量
